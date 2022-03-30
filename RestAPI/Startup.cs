@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using RestAPI.Models;
+using RestAPI.Business;
+using RestAPI.Business.Implementations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using RestAPI.Repository.Implementations;
+using RestAPI.Repository;
 
 namespace RestAPI
 {
@@ -26,6 +26,13 @@ namespace RestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<MyDbContext>(options => options.UseMySql(
+                Configuration["MySQLConnection:MySQLConnectionString"], 
+                new MySqlServerVersion(new Version(5, 7, 0)
+            )));
+            services.AddApiVersioning();
+            services.AddScoped<IPersonBusiness, PersonBusiness>();
+            services.AddScoped<Repository.IPersonRepository, PersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
