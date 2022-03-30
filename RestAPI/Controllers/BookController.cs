@@ -9,12 +9,12 @@ namespace RestAPI.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class PersonController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly ILogger<PersonController> _logger;
-        private IBusiness<PersonVO> _business;
+        private readonly ILogger<BookController> _logger;
+        private IBusiness<BookVO> _business;
 
-        public PersonController(ILogger<PersonController> logger, IBusiness<PersonVO> business)
+        public BookController(ILogger<BookController> logger, IBusiness<BookVO> business)
         {
             _logger = logger;
             _business = business;
@@ -32,21 +32,21 @@ namespace RestAPI.Controllers
             if (id == 0)
                 return BadRequest();
 
-            var person = _business.FindById(id);
+            var book = _business.FindById(id);
 
-            if (person == null)
+            if (book == null)
                 return NotFound();
 
-            return Ok(person);
+            return Ok(book);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] PersonVO person)
+        public IActionResult Post([FromBody] BookVO book)
         {
-            if (person == null)
+            if (book == null)
                 return BadRequest();
 
-            var result = _business.Create(person);
+            var result = _business.Create(book);
 
             if (result == null)
                 return BadRequest("Couldn't create the record. Invalid inputs.");
@@ -55,12 +55,12 @@ namespace RestAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] PersonVO person)
+        public IActionResult Put([FromBody] BookVO book)
         {
-            if (person == null)
+            if (book == null)
                 return BadRequest();
 
-            var result = _business.Update(person);
+            var result = _business.Update(book);
 
             return Ok(result);
         }

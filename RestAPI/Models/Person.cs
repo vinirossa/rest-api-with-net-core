@@ -2,16 +2,13 @@
 
 namespace RestAPI.Models
 {
-    [Table("person")]
-    public class Person
+    [Table("people")]
+    public class Person : Entity
     {
-        [Column("id")]
-        public long Id { get; set; }
-
-        [Column("first_name")]
+        [Column("firstname")]
         public string FirstName { get; set; }
 
-        [Column("last_name")]
+        [Column("lastname")]
         public string LastName { get; set; }
 
         [Column("address")]
