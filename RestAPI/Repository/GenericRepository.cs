@@ -52,7 +52,7 @@ namespace RestAPI.Repository
             _context.Entry(result).CurrentValues.SetValues(obj);
             _context.SaveChanges();
 
-            return obj;
+            return result;
         }
 
         public void Delete(long id)
